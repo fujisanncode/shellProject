@@ -3,6 +3,7 @@
 
 <template>
   <div class="hello">
+    <div>200411</div>
     <el-button>shell console</el-button>
     <div id="xterm" class="xterm" />
   </div>
