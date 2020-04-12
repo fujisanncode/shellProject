@@ -1,25 +1,31 @@
 import 'xterm/css/xterm.css'
-import { Terminal } from 'xterm'
-import { FitAddon } from 'xterm-addon-fit'
-import { AttachAddon } from 'xterm-addon-attach'
+import {
+  Terminal
+} from 'xterm'
+import {
+  FitAddon
+} from 'xterm-addon-fit'
+import {
+  AttachAddon
+} from 'xterm-addon-attach'
 
 export default {
   name: 'hello',
   props: {
     socketURI: {
       type: String,
-      default: 'ws://localhost:8078'
+      default: 'ws://39.101.206.66:8078'
     },
   },
-  mounted () {
+  mounted() {
     this.initSocket()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.socket.close()
     this.term.dispose()
   },
   methods: {
-    initTerm () {
+    initTerm() {
       const term = new Terminal({
         fontSize: 14,
         cursorBlink: true
@@ -33,24 +39,24 @@ export default {
       term.focus();
       this.term = term
     },
-    initSocket () {
+    initSocket() {
       this.socket = new WebSocket(this.socketURI);
       this.socketOnClose();
       this.socketOnOpen();
       this.socketOnError();
     },
-    socketOnOpen () {
+    socketOnOpen() {
       this.socket.onopen = () => {
         // 链接成功后
         this.initTerm()
       }
     },
-    socketOnClose () {
+    socketOnClose() {
       this.socket.onclose = () => {
         // console.log('close socket')
       }
     },
-    socketOnError () {
+    socketOnError() {
       this.socket.onerror = () => {
         // console.log('socket 链接失败')
       }
